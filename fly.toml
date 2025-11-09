@@ -1,5 +1,10 @@
+app = "railway-sshh-qbxzfq"
+primary_region = "iad"
+
+[build]
+
 # =====================================================
-# ⚙️ Dịch vụ web (HTTP + HTTPS)
+# ⚙️ Dịch vụ Web (HTTP + HTTPS)
 # =====================================================
 [[services]]
   internal_port = 80
@@ -18,16 +23,17 @@
     handlers = ["tls", "http"]
 
 # =====================================================
-# 🖥️ SSH service (để bạn vẫn dùng Termius)
+# 🖥️ SSH Service (Termius / CLI)
 # =====================================================
 [[services]]
   internal_port = 22
   protocol = "tcp"
+
   [[services.ports]]
     port = 22
 
 # =====================================================
-# 💻 Cấu hình máy ảo
+# 💻 Máy ảo (VM config)
 # =====================================================
 [[vm]]
   cpu_kind = "shared"
