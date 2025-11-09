@@ -13,9 +13,9 @@ RUN apt update && apt install -y \
     && mkdir /var/run/sshd
 
 # -----------------------------
-# Create user 'user' with sudo
+# Create user 'root' with password
 # -----------------------------
-RUN useradd -m trthaodev && echo "trthaodev:thaodev@" | chpasswd && adduser trthaodev sudo
+RUN echo "root:123456" | chpasswd
 
 # -----------------------------
 # Configure SSH
@@ -26,28 +26,11 @@ RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && \
     echo 'ClientAliveCountMax 3' >> /etc/ssh/sshd_config
 
 # -----------------------------
-# Download Ngrok v3
-# -----------------------------
-RUN wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz && \
-    tar -xzf ngrok-v3-stable-linux-amd64.tgz && mv ngrok /usr/local/bin/
-
-# -----------------------------
-# Copy start script
-# -----------------------------
-COPY start-ngrok-ssh.sh /usr/local/bin/start-ngrok-ssh.sh
-RUN chmod +x /usr/local/bin/start-ngrok-ssh.sh
-
-# -----------------------------
 # Expose ports
 # -----------------------------
-# Web server for Railway keep-alive
-EXPOSE 8080
-# SSH
 EXPOSE 22
-# Optional ports for aaPanel or FTP
-EXPOSE 14489 888 80 443 20 21
 
 # -----------------------------
-# Start container
+# Start SSH server directly
 # -----------------------------
-CMD ["/usr/local/bin/start-ngrok-ssh.sh"]
+CMD ["/usr/sbin/sshd", "-D"]
