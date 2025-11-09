@@ -1,8 +1,5 @@
-app = "railway-sshh-qbxzfq"
-primary_region = "iad"
-
 # =====================================================
-# ⚙️ Dịch vụ chính: Web (HTTP + HTTPS)
+# ⚙️ Dịch vụ web (HTTP + HTTPS)
 # =====================================================
 [[services]]
   internal_port = 80
@@ -21,12 +18,11 @@ primary_region = "iad"
     handlers = ["tls", "http"]
 
 # =====================================================
-# 🖥️ SSH Service (dành cho Termius / CLI)
+# 🖥️ SSH service (để bạn vẫn dùng Termius)
 # =====================================================
 [[services]]
   internal_port = 22
   protocol = "tcp"
-
   [[services.ports]]
     port = 22
 
