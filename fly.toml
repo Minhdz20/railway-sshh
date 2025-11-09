@@ -1,12 +1,28 @@
-# fly.toml app configuration file generated for railway-sshh-qbxzfq on 2025-11-09T15:40:21Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = "railway-sshh-qbxzfq"
 primary_region = "iad"
 
-# Dịch vụ chính: SSH qua TCP
+# =====================================================
+# ⚙️ Dịch vụ chính: Web (HTTP + HTTPS)
+# =====================================================
+[[services]]
+  internal_port = 80
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+[[services]]
+  internal_port = 443
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+# =====================================================
+# 🖥️ SSH Service (dành cho Termius / CLI)
+# =====================================================
 [[services]]
   internal_port = 22
   protocol = "tcp"
@@ -14,6 +30,9 @@ primary_region = "iad"
   [[services.ports]]
     port = 22
 
+# =====================================================
+# 💻 Cấu hình máy ảo
+# =====================================================
 [[vm]]
   cpu_kind = "shared"
   cpus = 4
